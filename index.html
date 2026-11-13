@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<title>CrashiZ · Founder at ZeroHook · Cybersecurity Engineer</title>
+		<meta
+			name="description"
+			content="Regő Botond Ronyecz (CrashiZ) is a cybersecurity engineer and the founder of ZeroHook, working in GRC, auditing and risk management. ISO/IEC 27001 Lead Auditor candidate."
+		/>
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%20color='%23ededed'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23000000'/%3E%3Cg%20transform='translate%284%2C3%29'%3E%3Cpath%20fill='currentColor'%20d='M%203%2C11%20Q%2012%2C3%2021%2C11%20L%2021%2C13%20Q%2012%2C5%203%2C13%20z'/%3E%3Cpath%20fill='currentColor'%20d='M%203%2C13%20Q%2012%2C21%2021%2C13%20L%2021%2C15%20Q%2012%2C23%203%2C15%20z'/%3E%3Cpath%20fill='currentColor'%20d='M%202.5%2C10.5%20L%201%2C9%20L%202%2C11.2%20z%20M%2021.5%2C10.5%20L%2023%2C9%20L%2022%2C11.2%20z%20M%202.5%2C15.5%20L%201%2C17%20L%202%2C14.8%20z%20M%2021.5%2C15.5%20L%2023%2C17%20L%2022%2C14.8%20z'/%3E%3Cg%20transform='translate%2812%2C12%29%20scale%280.58%29%20translate%28-12%2C-12%29'%3E%3Cpath%20fill='currentColor'%20fill-rule='evenodd'%20d='M%202.5%2C12%20C%202.5%2C7.5%207%2C5%2012%2C5%20C%2017%2C5%2021.5%2C7.5%2021.5%2C12%20C%2021.5%2C16.5%2017%2C19%2012%2C19%20C%207%2C19%202.5%2C16.5%202.5%2C12%20z%20M%2010.9%2C9.7%20A%201.1%2C1.1%200%200%201%2013.1%2C9.7%20v%204.6%20A%201.1%2C1.1%200%200%201%2010.9%2C14.3%20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Press+Start+2P&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				/* palette sampled from skills.sh screenshots, see design.md */
+				--bg: #000000;
+				--surface: #151515;
+				--border: #1f1f1f;
+				--dim: #656665;
+				--muted: #a0a0a0;
+				--text: #ededed;
+				--accent: #ffd426;
+				--sans:
+					"Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+				--mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+				--pixel: "Press Start 2P", ui-monospace, monospace;
+				--w: 1088px;
+				--radius: 6px;
+				color-scheme: dark;
+				box-sizing: border-box;
+				padding-top: env(safe-area-inset-top, 0px);
+				padding-bottom: env(safe-area-inset-bottom, 0px);
+			}
+			html {
+				scroll-padding-top: calc(64px + env(safe-area-inset-top, 0px));
+				scroll-behavior: smooth;
+			}
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				background: var(--bg);
+				color: var(--text);
+				font: 400 16px/1.6 var(--sans);
+				-webkit-font-smoothing: antialiased;
+			}
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+			a:focus-visible,
+			button:focus-visible {
+				outline: 2px solid var(--text);
+				outline-offset: 3px;
+			}
+			.wrap {
+				max-width: var(--w);
+				margin: 0 auto;
+				padding: 0 20px;
+			}
+			.label {
+				font: 500 12px/1 var(--mono);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--text);
+				margin: 0;
+			}
+
+			/* nav */
+			nav {
+				position: sticky;
+				top: env(safe-area-inset-top, 0px);
+				z-index: 5;
+				background: var(--bg);
+				border-bottom: 1px solid var(--border);
+			}
+			nav .wrap {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: 56px;
+				max-width: 1280px;
+			}
+			.brand {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				font-weight: 600;
+			}
+			.brand i {
+				font-style: normal;
+				color: var(--dim);
+				font-weight: 400;
+			}
+			.brand svg {
+				width: 22px;
+				height: 22px;
+				fill: var(--text);
+			}
+			.links {
+				display: flex;
+				gap: 20px;
+				font-size: 14px;
+				color: var(--muted);
+			}
+			.links a:hover {
+				color: var(--text);
+			}
+
+			/* hero */
+			.hero {
+				display: grid;
+				grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+				gap: 56px;
+				padding: 72px 0 56px;
+				align-items: start;
+			}
+			.mark {
+				container-type: inline-size;
+			}
+			.pixel {
+				font: 400 13cqw/1.25 var(--pixel);
+				color: var(--text);
+				margin: 0;
+				letter-spacing: 0;
+				text-transform: uppercase;
+				text-shadow:
+					3px 3px 0 #000,
+					4px 4px 0 #454545,
+					7px 7px 0 #000,
+					8px 8px 0 #1f1f1f;
+			}
+			.mark .label {
+				margin-top: 28px;
+			}
+			.lead {
+				font-size: clamp(22px, 2.6vw, 32px);
+				line-height: 1.22;
+				letter-spacing: -0.02em;
+				color: var(--muted);
+				margin: 0;
+				font-weight: 400;
+			}
+			.lead b {
+				color: var(--text);
+				font-weight: 400;
+			}
+
+			.duo {
+				display: grid;
+				grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+				gap: 56px;
+				padding: 0 0 72px;
+			}
+			.term {
+				background: var(--surface);
+				border-radius: var(--radius);
+				padding: 18px 20px;
+				margin-top: 16px;
+				font: 400 13px/1.9 var(--mono);
+				color: var(--muted);
+			}
+			.term span {
+				color: var(--dim);
+			}
+			.term b {
+				color: var(--text);
+				font-weight: 400;
+			}
+			.chips {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 12px;
+				margin-top: 16px;
+			}
+			.chip {
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 20px 16px;
+				min-height: 116px;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				gap: 14px;
+				transition: border-color 0.2s;
+			}
+			.chip:hover {
+				border-color: var(--dim);
+			}
+			.chip small {
+				font: 400 12px/1.4 var(--mono);
+				color: var(--dim);
+			}
+			.chip strong {
+				font-weight: 500;
+				font-size: 15px;
+				line-height: 1.3;
+			}
+
+			/* table */
+			section {
+				padding: 0 0 72px;
+			}
+			.search {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				border-bottom: 1px solid var(--text);
+				padding: 16px 0;
+				margin-top: 20px;
+				font: 400 14px var(--mono);
+				color: var(--dim);
+			}
+			.tabs {
+				display: flex;
+				gap: 20px;
+				margin-top: 28px;
+				font: 400 14px var(--mono);
+			}
+			.tabs button {
+				all: unset;
+				cursor: pointer;
+				color: var(--dim);
+				padding-bottom: 6px;
+				border-bottom: 1px solid transparent;
+			}
+			.tabs button[aria-selected="true"] {
+				color: var(--text);
+				border-color: var(--text);
+			}
+			.tabs button:hover {
+				color: var(--text);
+			}
+			.thead,
+			.row {
+				display: grid;
+				grid-template-columns: 48px minmax(0, 1fr) 120px;
+				gap: 12px;
+				align-items: center;
+			}
+			.thead {
+				margin-top: 28px;
+				padding: 0 0 14px;
+				font: 400 12px var(--mono);
+				letter-spacing: 0.06em;
+				color: var(--muted);
+				text-transform: uppercase;
+			}
+			.thead span:last-child,
+			.row .when {
+				text-align: right;
+			}
+			.row {
+				padding: 22px 0;
+				border-top: 1px solid var(--border);
+				transition: background 0.2s;
+			}
+			.row:hover {
+				background: #0a0a0a;
+			}
+			.row .n {
+				font: 400 14px var(--mono);
+				color: var(--muted);
+			}
+			.row h3 {
+				margin: 0;
+				font-size: 17px;
+				font-weight: 600;
+				letter-spacing: -0.01em;
+			}
+			.row h3 span {
+				font: 400 13px var(--mono);
+				color: var(--dim);
+				margin-left: 10px;
+				letter-spacing: 0;
+			}
+			.row p {
+				margin: 6px 0 0;
+				color: var(--muted);
+				font-size: 15px;
+				max-width: 60ch;
+			}
+			.row .when {
+				font: 400 14px var(--mono);
+			}
+			.row[hidden] {
+				display: none;
+			}
+			.end {
+				border-top: 1px solid var(--border);
+			}
+
+			/* onehook */
+			.split {
+				display: grid;
+				grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+				gap: 56px;
+			}
+			.big {
+				font-size: clamp(20px, 2.2vw, 26px);
+				line-height: 1.3;
+				letter-spacing: -0.015em;
+				margin: 0 0 20px;
+				color: var(--text);
+				font-weight: 400;
+			}
+			.body {
+				color: var(--muted);
+				margin: 0;
+				max-width: 56ch;
+			}
+
+			/* contact */
+			.needs-asset {
+				border: 1px dashed var(--border);
+				border-radius: var(--radius);
+				padding: 14px 16px;
+				display: flex;
+				justify-content: space-between;
+				gap: 12px;
+				color: var(--muted);
+				font:
+					500 14px/1.4 ui-monospace,
+					SFMono-Regular,
+					monospace;
+			}
+			.needs-asset small {
+				color: var(--dim);
+				font-weight: 400;
+			}
+			.contact {
+				display: grid;
+				gap: 10px;
+			}
+
+			footer {
+				border-top: 1px solid var(--border);
+				padding: 28px 0 44px;
+				color: var(--dim);
+				font-size: 13px;
+			}
+			footer .wrap {
+				display: flex;
+				justify-content: space-between;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+
+			.pixel {
+				animation: echo 3.2s ease-in-out infinite;
+			}
+			@keyframes echo {
+				0%,
+				100% {
+					text-shadow:
+						3px 3px 0 #000,
+						4px 4px 0 #454545,
+						7px 7px 0 #000,
+						8px 8px 0 #1f1f1f;
+				}
+				50% {
+					text-shadow:
+						3px 3px 0 #000,
+						4px 4px 0 var(--accent),
+						7px 7px 0 #000,
+						8px 8px 0 #1f1f1f;
+				}
+			}
+			.dot {
+				display: inline-block;
+				width: 7px;
+				height: 7px;
+				border-radius: 50%;
+				background: var(--accent);
+				margin-right: 10px;
+				vertical-align: 1px;
+				animation: pulse 1.8s ease-out infinite;
+			}
+			@keyframes pulse {
+				0% {
+					box-shadow: 0 0 0 0 rgba(255, 212, 38, 0.55);
+				}
+				100% {
+					box-shadow: 0 0 0 9px rgba(255, 212, 38, 0);
+				}
+			}
+			.cur {
+				display: inline-block;
+				width: 8px;
+				height: 15px;
+				background: var(--accent);
+				vertical-align: -3px;
+				animation: blink 1.05s steps(1) infinite;
+			}
+			@keyframes blink {
+				50% {
+					opacity: 0;
+				}
+			}
+			.term > div:not(:last-child) {
+				overflow: hidden;
+				white-space: nowrap;
+				width: calc(var(--n) * 1ch);
+				animation: type 0.6s steps(var(--n)) var(--d) both;
+			}
+			.term > div:last-child {
+				animation: show 0.01s 4.8s both;
+			}
+			@keyframes type {
+				from {
+					width: 0;
+				}
+			}
+			@keyframes show {
+				from {
+					opacity: 0;
+				}
+			}
+			.row:hover .n {
+				color: var(--accent);
+			}
+			.more {
+				display: block;
+				padding: 16px 0 0;
+				font: 400 13px var(--mono);
+				color: var(--muted);
+			}
+			.more:hover {
+				color: var(--accent);
+			}
+			.row h3 a:hover {
+				color: var(--accent);
+			}
+			.link {
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 14px 16px;
+				display: flex;
+				justify-content: space-between;
+				gap: 12px;
+				color: var(--text);
+				font: 500 14px/1.4 var(--mono);
+				transition: border-color 0.2s;
+			}
+			.link small {
+				color: var(--dim);
+				font-weight: 400;
+			}
+			.link:hover {
+				border-color: var(--accent);
+			}
+			.prose p {
+				color: var(--muted);
+				font-size: 18px;
+				line-height: 1.7;
+				max-width: 62ch;
+				margin: 0 0 22px;
+				letter-spacing: -0.005em;
+			}
+			.prose p:first-child {
+				color: var(--text);
+			}
+			.prose p:last-child {
+				margin-bottom: 0;
+			}
+			.reveal {
+				transition:
+					opacity 0.5s,
+					transform 0.5s;
+			}
+			.js .reveal.pre {
+				opacity: 0;
+				transform: translateY(8px);
+			}
+			.js .reveal.pre.in {
+				opacity: 1;
+				transform: none;
+			}
+			@media (prefers-reduced-motion: reduce) {
+				* {
+					transition: none !important;
+					animation: none !important;
+					scroll-behavior: auto !important;
+				}
+				.js .reveal.pre {
+					opacity: 1;
+					transform: none;
+				}
+			}
+
+			@media (max-width: 820px) {
+				.hero,
+				.duo,
+				.split {
+					grid-template-columns: minmax(0, 1fr);
+					gap: 28px;
+				}
+				.hero {
+					padding: 44px 0 36px;
+				}
+				.duo {
+					padding-bottom: 48px;
+				}
+				section {
+					padding-bottom: 48px;
+				}
+				.pixel {
+					font-size: min(13cqw, 48px);
+				}
+				.chips {
+					grid-template-columns: 1fr;
+				}
+				.chip {
+					min-height: 0;
+					gap: 10px;
+				}
+				.thead,
+				.row {
+					grid-template-columns: 32px minmax(0, 1fr) 92px;
+				}
+				.row h3 span {
+					display: block;
+					margin: 2px 0 0;
+				}
+				.links {
+					gap: 14px;
+				}
+				.brand i,
+				.brand .full {
+					display: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<div class="wrap">
+				<a class="brand" href="#top" aria-label="CrashiZ, top of page">
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M 3,11 Q 12,3 21,11 L 21,13 Q 12,5 3,13 z" />
+						<path d="M 3,13 Q 12,21 21,13 L 21,15 Q 12,23 3,15 z" />
+						<path
+							d="M 2.5,10.5 L 1,9 L 2,11.2 z M 21.5,10.5 L 23,9 L 22,11.2 z M 2.5,15.5 L 1,17 L 2,14.8 z M 21.5,15.5 L 23,17 L 22,14.8 z"
+						/>
+						<g transform="translate(12,12) scale(0.58) translate(-12,-12)">
+							<path
+								fill-rule="evenodd"
+								d="M 2.5,12 C 2.5,7.5 7,5 12,5 C 17,5 21.5,7.5 21.5,12 C 21.5,16.5 17,19 12,19 C 7,19 2.5,16.5 2.5,12 z M 10.9,9.7 A 1.1,1.1 0 0 1 13.1,9.7 v 4.6 A 1.1,1.1 0 0 1 10.9,14.3 z"
+							/>
+						</g>
+					</svg
+					><i>/</i><span class="full">CrashiZ</span>
+				</a>
+				<div class="links">
+					<a href="#now">Now</a><a href="#about">About</a><a href="#work">Work</a
+					><a href="#open">Open to</a><a href="#contact">Contact</a>
+				</div>
+			</div>
+		</nav>
+
+		<main id="top" class="wrap">
+			<div class="hero">
+				<div class="mark">
+					<h1 class="pixel">CrashiZ</h1>
+					<p class="label">Founder @ ZeroHook · GRC &amp; Auditing</p>
+				</div>
+				<p class="lead reveal pre">
+					<b
+						>I break things first, then build the compliant control that stops the next
+						person doing it.</b
+					>
+					Founder at ZeroHook, engineering a DNS security and compliance auditing
+					platform.
+				</p>
+			</div>
+
+			<div class="duo" id="now">
+				<div class="reveal pre">
+					<p class="label"><span class="dot"></span>Now</p>
+					<div class="term" role="img" aria-label="Current status">
+						<div style="--n: 9; --d: 0s"><span>$</span> whoami</div>
+						<div style="--n: 8; --d: 0.7s"><b>crashiz</b></div>
+						<div style="--n: 9; --d: 1.5s"><span>$</span> status</div>
+						<div style="--n: 27; --d: 2.2s">
+							role&nbsp;&nbsp;&nbsp;&nbsp;<b>founder @ zerohook</b>
+						</div>
+						<div style="--n: 31; --d: 3s">
+							also&nbsp;&nbsp;&nbsp;&nbsp;<b>cybersecurity engineer</b>
+						</div>
+						<div style="--n: 28; --d: 3.8s">
+							focus&nbsp;&nbsp;&nbsp;<b>grc, auditing, risk</b>
+						</div>
+						<div style="--n: 25; --d: 4.6s">
+							stack&nbsp;&nbsp;&nbsp;<b>c#, .net, python</b>
+						</div>
+						<div><span>$</span> <i class="cur"></i></div>
+					</div>
+				</div>
+				<div class="reveal pre">
+					<p class="label">Focus</p>
+					<div class="chips">
+						<div class="chip">
+							<small>01</small>
+							<div>
+								<strong>Offense</strong><br /><small
+									>Web, network and Active Directory pentesting, bug bounty,
+									CTF</small
+								>
+							</div>
+						</div>
+						<div class="chip">
+							<small>02</small>
+							<div>
+								<strong>Defense</strong><br /><small
+									>GRC, auditing and risk management on NIST CSF and SP 800-30,
+									ISO 27001</small
+								>
+							</div>
+						</div>
+						<div class="chip">
+							<small>03</small>
+							<div>
+								<strong>Build</strong><br /><small
+									>DNS security platform, .NET and C# tooling, full-stack
+									web</small
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<section id="about" class="split">
+				<div><p class="label">About</p></div>
+				<div class="prose reveal pre">
+					<p>
+						I am a cybersecurity engineer and developer, and the founder of ZeroHook. I
+						break things first, then build the compliant control that stops the next
+						person doing it. Most of my work sits where attacking, defending and
+						governance hand over to each other.
+					</p>
+					<p>
+						At ZeroHook I am engineering a DNS security and compliance auditing platform
+						from scratch. The infrastructure is architected against NIST guidance, NIST
+						CSF and NIST SP 800-30, and the platform measures DNS and email integrity
+						and audits how it drifts over time.
+					</p>
+					<p>
+						To bridge technical security engineering and enterprise governance, I am
+						preparing for the ISO/IEC 27001 Lead Auditor certification.
+					</p>
+					<p>
+						On the offense side I do web, network and Active Directory pentesting, bug
+						bounty, CTF and reverse engineering. My specialties are web exploitation
+						(XSS, SQLi, IDOR, CSRF and SSRF), privilege escalation, and DNS and email
+						hardening with SPF, DKIM, DMARC and DNSSEC.
+					</p>
+					<p>
+						I also build the tools: security tooling in .NET and C#, REST APIs,
+						full-stack web, and ML work in PyTorch and pandas.
+					</p>
+					<p>
+						I am a competitive CTF player. With my team I compete in national and
+						international events, solving real-world challenges under pressure. I
+						reached the top 8% on TryHackMe at 16.
+					</p>
+				</div>
+			</section>
+
+			<section id="work">
+				<p class="label">Work</p>
+				<div class="search" aria-hidden="true">
+					<span>⌕</span><span>What I build, know and use</span>
+				</div>
+				<div class="tabs" role="tablist" aria-label="Filter work">
+					<button role="tab" aria-selected="true" data-f="experience">Experience</button>
+					<button role="tab" aria-selected="false" data-f="project">Projects</button>
+					<button role="tab" aria-selected="false" data-f="skills">Skills</button>
+					<button role="tab" aria-selected="false" data-f="tools">
+						Security tooling
+					</button>
+				</div>
+				<div class="thead"><span>#</span><span>Name</span><span>Detail</span></div>
+				<div>
+					<div class="row" data-g="experience">
+						<span class="n">0</span>
+						<div>
+							<h3>Founder<span>ZeroHook</span></h3>
+							<p>
+								Full-time. Building a DNS security and compliance auditing platform.
+								Business ownership and start-up leadership.
+							</p>
+						</div>
+						<span class="when">2026 - now</span>
+					</div>
+					<div class="row" data-g="experience">
+						<span class="n">0</span>
+						<div>
+							<h3>
+								Cybersecurity Engineer &amp; Full-Stack Developer<span
+									>Self-employed</span
+								>
+							</h3>
+							<p>
+								Designing and developing the DNS security and compliance auditing
+								platform from scratch, with controls aligned to NIST CSF and NIST SP
+								800-30.
+							</p>
+						</div>
+						<span class="when">2025 - now</span>
+					</div>
+					<div class="row" data-g="experience">
+						<span class="n">0</span>
+						<div>
+							<h3>
+								Cyber Security Researcher &amp; Competitive CTF Player<span
+									>Freelance</span
+								>
+							</h3>
+							<p>
+								Core member of a competitive CTF team, national and international
+								competitions.
+							</p>
+						</div>
+						<span class="when">2023 - now</span>
+					</div>
+					<div class="row" data-g="project">
+						<span class="n">0</span>
+						<div>
+							<h3>Portglass<span>private</span></h3>
+							<p>Host exposure scanning for Linux.</p>
+						</div>
+						<span class="when">Coming soon</span>
+					</div>
+					<div class="row" data-g="project">
+						<span class="n">0</span>
+						<div>
+							<h3>QACCP<span>private</span></h3>
+							<p>Protocol research.</p>
+						</div>
+						<span class="when">Coming soon</span>
+					</div>
+					<div class="row" data-g="project">
+						<span class="n">0</span>
+						<div>
+							<h3>
+								<a
+									href="https://github.com/CrashizVok/steal-a-design"
+									target="_blank"
+									rel="noopener"
+									>steal-a-design</a
+								><span>github</span>
+							</h3>
+						</div>
+						<span class="when">JavaScript</span>
+					</div>
+					<div class="row" data-g="project">
+						<span class="n">0</span>
+						<div>
+							<h3>
+								<a
+									href="https://github.com/CrashizVok/keep-going"
+									target="_blank"
+									rel="noopener"
+									>keep-going</a
+								><span>github</span>
+							</h3>
+						</div>
+						<span class="when">TypeScript</span>
+					</div>
+					<div class="row" data-g="project">
+						<span class="n">0</span>
+						<div>
+							<h3>
+								<a
+									href="https://github.com/CrashizVok/jarvis-thinking"
+									target="_blank"
+									rel="noopener"
+									>jarvis-thinking</a
+								><span>github</span>
+							</h3>
+						</div>
+						<span class="when">TypeScript</span>
+					</div>
+					<div class="row" data-g="project">
+						<span class="n">0</span>
+						<div>
+							<h3>
+								<a
+									href="https://github.com/CrashizVok/Humanize"
+									target="_blank"
+									rel="noopener"
+									>Humanize</a
+								><span>github</span>
+							</h3>
+						</div>
+						<span class="when">Python</span>
+					</div>
+					<div class="row" data-g="project">
+						<span class="n">0</span>
+						<div>
+							<h3>
+								<a
+									href="https://github.com/CrashizVok/Proxy"
+									target="_blank"
+									rel="noopener"
+									>Proxy</a
+								><span>github</span>
+							</h3>
+							<p>A proxy server.</p>
+						</div>
+						<span class="when">Python</span>
+					</div>
+					<div class="row" data-g="skills">
+						<span class="n">0</span>
+						<div>
+							<h3>Languages<span>skill</span></h3>
+							<p>
+								C#, .NET, Python, TypeScript, JavaScript, Java, C++, bash and
+								PowerShell.
+							</p>
+						</div>
+						<span class="when">Code</span>
+					</div>
+					<div class="row" data-g="skills">
+						<span class="n">0</span>
+						<div>
+							<h3>Web and infra<span>skill</span></h3>
+							<p>
+								React, Next.js, nginx, Cloudflare, PostgreSQL, MySQL, Redis and Git.
+							</p>
+						</div>
+						<span class="when">Stack</span>
+					</div>
+					<div class="row" data-g="skills">
+						<span class="n">0</span>
+						<div>
+							<h3>Offense<span>skill</span></h3>
+							<p>
+								Web, network and Active Directory pentesting, bug bounty, CTF and
+								reverse engineering.
+							</p>
+						</div>
+						<span class="when">Security</span>
+					</div>
+					<div class="row" data-g="skills">
+						<span class="n">0</span>
+						<div>
+							<h3>Specialties<span>skill</span></h3>
+							<p>
+								Web exploitation (XSS, SQLi, IDOR, CSRF, SSRF), privilege
+								escalation, and DNS and email hardening (SPF, DKIM, DMARC, DNSSEC).
+							</p>
+						</div>
+						<span class="when">Security</span>
+					</div>
+					<div class="row" data-g="skills">
+						<span class="n">0</span>
+						<div>
+							<h3>Defense<span>skill</span></h3>
+							<p>
+								SOC fundamentals, threat modeling and risk assessment on NIST CSF
+								and NIST SP 800-30.
+							</p>
+						</div>
+						<span class="when">Security</span>
+					</div>
+					<div class="row" data-g="skills">
+						<span class="n">0</span>
+						<div>
+							<h3>Build<span>skill</span></h3>
+							<p>
+								Security tooling in .NET and C#, REST APIs, full-stack web, and ML
+								work in PyTorch and pandas.
+							</p>
+						</div>
+						<span class="when">Build</span>
+					</div>
+					<div class="row" data-g="skills">
+						<span class="n">0</span>
+						<div>
+							<h3>TryHackMe<span>skill</span></h3>
+							<p>Top 8% at age 16.</p>
+						</div>
+						<span class="when">Top 8%</span>
+					</div>
+					<div class="row" data-g="tools">
+						<span class="n">0</span>
+						<div>
+							<h3>Offensive web<span>tools</span></h3>
+							<p>Burp Suite, OWASP ZAP, Caido, mitmproxy, SQLmap, Nuclei.</p>
+						</div>
+						<span class="when">Tool</span>
+					</div>
+					<div class="row" data-g="tools">
+						<span class="n">0</span>
+						<div>
+							<h3>Discovery and fuzzing<span>tools</span></h3>
+							<p>ffuf, gobuster, dirsearch, Arjun, Nikto, WPScan, XSStrike.</p>
+						</div>
+						<span class="when">Tool</span>
+					</div>
+					<div class="row" data-g="tools">
+						<span class="n">0</span>
+						<div>
+							<h3>Network and infra<span>tools</span></h3>
+							<p>
+								Nmap, Wireshark, Nessus, OpenVAS, Metasploit, Responder, Netcat,
+								Bettercap, Scapy, dig.
+							</p>
+						</div>
+						<span class="when">Tool</span>
+					</div>
+					<div class="row" data-g="tools">
+						<span class="n">0</span>
+						<div>
+							<h3>Active Directory<span>tools</span></h3>
+							<p>BloodHound, Impacket, NetExec, Certipy.</p>
+						</div>
+						<span class="when">Tool</span>
+					</div>
+					<div class="row" data-g="tools">
+						<span class="n">0</span>
+						<div>
+							<h3>Cracking and reverse engineering<span>tools</span></h3>
+							<p>Hashcat, John the Ripper, Hydra, hcxtools, Ghidra, Binary Ninja.</p>
+						</div>
+						<span class="when">Tool</span>
+					</div>
+					<div class="row" data-g="tools">
+						<span class="n">0</span>
+						<div>
+							<h3>OSINT and recon<span>tools</span></h3>
+							<p>Shodan, FOFA, theHarvester, Amass.</p>
+						</div>
+						<span class="when">Tool</span>
+					</div>
+					<div class="row" data-g="tools">
+						<span class="n">0</span>
+						<div>
+							<h3>Build and CI<span>tools</span></h3>
+							<p>Docker, Semgrep, Dependabot, GitHub Actions.</p>
+						</div>
+						<span class="when">Tool</span>
+					</div>
+				</div>
+				<div class="end"></div>
+				<a class="more" href="https://github.com/CrashizVok" target="_blank" rel="noopener"
+					>All repositories on GitHub ↗</a
+				>
+			</section>
+
+			<section id="open" class="split">
+				<div><p class="label">Open to</p></div>
+				<div class="reveal pre">
+					<p class="big">
+						Security engineering and GRC roles across Europe, remote or on-site. Also
+						open to CTF teams.
+					</p>
+				</div>
+			</section>
+
+			<section id="contact" class="split">
+				<div><p class="label">Contact</p></div>
+				<div class="contact reveal pre">
+					<a class="link" href="mailto:rronyecz@protonmail.com"
+						><span>Email</span><small>rronyecz@protonmail.com</small></a
+					>
+					<a
+						class="link"
+						href="https://app.hackthebox.com/users/1732886"
+						target="_blank"
+						rel="noopener"
+						><span>Hack The Box</span><small>CrashiZ</small></a
+					>
+					<a
+						class="link"
+						href="https://tryhackme.com/p/CrashiZ"
+						target="_blank"
+						rel="noopener"
+						><span>TryHackMe</span><small>CrashiZ</small></a
+					>
+					<a
+						class="link"
+						href="https://ctftime.org/user/228005"
+						target="_blank"
+						rel="noopener"
+						><span>CTFtime</span><small>CrashiZ</small></a
+					>
+					<a
+						class="link"
+						href="https://github.com/CrashizVok"
+						target="_blank"
+						rel="noopener"
+						><span>GitHub</span><small>CrashizVok</small></a
+					>
+					<a
+						class="link"
+						href="https://www.linkedin.com/in/ronyecz-rego"
+						target="_blank"
+						rel="noopener"
+						><span>LinkedIn</span><small>Regő Botond Ronyecz</small></a
+					>
+					<a class="link" href="https://x.com/CrashiZ_" target="_blank" rel="noopener"
+						><span>X (Twitter)</span><small>@CrashiZ_</small></a
+					>
+				</div>
+			</section>
+		</main>
+
+		<footer>
+			<div class="wrap"><span>© 2026 CrashiZ</span><span>github.com/CrashizVok</span></div>
+		</footer>
+
+		<script>
+			(function () {
+				document.documentElement.classList.add("js");
+				document.querySelectorAll("section").forEach(function (sec) {
+					var tabs = sec.querySelectorAll(".tabs button"),
+						rows = sec.querySelectorAll(".row");
+					function apply(f) {
+						var n = 0;
+						rows.forEach(function (r) {
+							var show = f === "all" || r.dataset.g === f;
+							r.hidden = !show;
+							if (show) {
+								r.querySelector(".n").textContent = ++n;
+							}
+						});
+					}
+					tabs.forEach(function (b) {
+						b.addEventListener("click", function () {
+							tabs.forEach(function (x) {
+								x.setAttribute("aria-selected", x === b);
+							});
+							apply(b.dataset.f);
+						});
+					});
+					var sel = sec.querySelector(".tabs [aria-selected=true]");
+					if (sel) apply(sel.dataset.f);
+				});
+				var els = document.querySelectorAll(".reveal");
+				if (!("IntersectionObserver" in window)) {
+					els.forEach(function (e) {
+						e.classList.remove("pre");
+					});
+					return;
+				}
+				var io = new IntersectionObserver(
+					function (es) {
+						es.forEach(function (e) {
+							if (e.isIntersecting) {
+								e.target.classList.add("in");
+								io.unobserve(e.target);
+							}
+						});
+					},
+					{ threshold: 0.1 },
+				);
+				els.forEach(function (e) {
+					io.observe(e);
+				});
+				setTimeout(function () {
+					els.forEach(function (e) {
+						e.classList.add("in");
+					});
+				}, 2500);
+			})();
+		</script>
+	</body>
+</html>
