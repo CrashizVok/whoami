@@ -302,6 +302,149 @@
 				border-top: 1px solid var(--border);
 			}
 
+			/* certification path */
+			.path {
+				margin: 28px 0 0;
+				padding: 20px 24px 22px;
+				background: var(--surface);
+				border-radius: var(--radius);
+			}
+			.path[hidden] {
+				display: none;
+			}
+			.p-head {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px 20px;
+				flex-wrap: wrap;
+				font: 400 11px/1 var(--mono);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--dim);
+			}
+			.p-key {
+				display: flex;
+				align-items: center;
+				gap: 18px;
+			}
+			.p-key span {
+				display: flex;
+				align-items: center;
+				gap: 7px;
+			}
+			.p-key .k {
+				width: 7px;
+				height: 7px;
+				border-radius: 50%;
+				border: 1px solid var(--dim);
+			}
+			.p-key .k.on {
+				background: var(--accent);
+				border-color: var(--accent);
+			}
+			.graph {
+				display: grid;
+				grid-template-columns: minmax(0, 0.9fr) 64px minmax(0, 1.55fr) 64px minmax(0, 0.9fr);
+				align-items: center;
+				margin-top: 22px;
+			}
+			.node {
+				display: flex;
+				flex-direction: column;
+				gap: 9px;
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 14px 16px;
+				background: var(--surface);
+			}
+			.node.now {
+				border-color: rgba(255, 212, 38, 0.45);
+			}
+			.node .code,
+			.route .code {
+				font: 500 12px/1 var(--mono);
+				letter-spacing: 0.06em;
+				color: var(--text);
+			}
+			.node.now .code,
+			.route.on .code {
+				color: var(--accent);
+			}
+			.node .nb,
+			.route .nb {
+				font-size: 14px;
+				line-height: 1.35;
+				letter-spacing: -0.01em;
+				color: var(--muted);
+			}
+			.node .st,
+			.set-label,
+			.route .st {
+				font: 400 10px/1.3 var(--mono);
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--dim);
+			}
+			.node.now .st,
+			.route.on .st {
+				color: var(--accent);
+			}
+			.set {
+				background: var(--surface);
+				border: 1px dashed var(--dim);
+				border-radius: var(--radius);
+				padding: 12px 16px 2px;
+			}
+			.set-label {
+				display: block;
+			}
+			.route {
+				display: grid;
+				grid-template-columns: 54px minmax(0, 1fr) auto;
+				align-items: baseline;
+				gap: 2px 10px;
+				padding: 10px 0;
+				border-top: 1px solid var(--border);
+				margin-top: 8px;
+			}
+			.route.on {
+				box-shadow: inset 2px 0 0 var(--accent);
+				padding-left: 12px;
+				margin-left: -12px;
+			}
+			.edge {
+				position: relative;
+				height: 1px;
+				background: var(--dim);
+			}
+			.edge::after {
+				content: "";
+				position: absolute;
+				right: 5px;
+				top: -3px;
+				border-left: 5px solid var(--dim);
+				border-top: 3px solid transparent;
+				border-bottom: 3px solid transparent;
+			}
+			.edge span {
+				position: absolute;
+				left: 50%;
+				top: 0;
+				transform: translate(-50%, -150%);
+				font: 400 9px/1 var(--mono);
+				letter-spacing: 0.09em;
+				text-transform: uppercase;
+				color: var(--muted);
+				white-space: nowrap;
+			}
+			.p-note {
+				margin: 20px 0 0;
+				font: 400 11px/1.6 var(--mono);
+				color: var(--muted);
+				max-width: 100ch;
+			}
+
 			/* onehook */
 			.split {
 				display: grid;
@@ -530,6 +673,46 @@
 				.row {
 					grid-template-columns: 32px minmax(0, 1fr) 92px;
 				}
+				.path {
+					padding: 18px;
+				}
+				.tabs {
+					flex-wrap: wrap;
+					gap: 10px 18px;
+					margin-top: 22px;
+				}
+				.graph {
+					grid-template-columns: minmax(0, 1fr);
+					gap: 0;
+					margin-top: 18px;
+				}
+				.edge {
+					width: 1px;
+					height: 44px;
+					margin: 0 auto;
+					background: var(--dim);
+				}
+				.edge::after {
+					right: auto;
+					left: -3px;
+					top: auto;
+					bottom: 5px;
+					border-left: 3px solid transparent;
+					border-right: 3px solid transparent;
+					border-top: 5px solid var(--dim);
+					border-bottom: 0;
+				}
+				.edge span {
+					left: 10px;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+				.route {
+					grid-template-columns: 48px minmax(0, 1fr);
+				}
+				.route .st {
+					grid-column: 2;
+				}
 				.row h3 span {
 					display: block;
 					margin: 2px 0 0;
@@ -559,8 +742,7 @@
 								fill-rule="evenodd"
 								d="M 2.5,12 C 2.5,7.5 7,5 12,5 C 17,5 21.5,7.5 21.5,12 C 21.5,16.5 17,19 12,19 C 7,19 2.5,16.5 2.5,12 z M 10.9,9.7 A 1.1,1.1 0 0 1 13.1,9.7 v 4.6 A 1.1,1.1 0 0 1 10.9,14.3 z"
 							/>
-						</g>
-					</svg
+						</g></svg
 					><i>/</i><span class="full">CrashiZ</span>
 				</a>
 				<div class="links">
@@ -691,6 +873,51 @@
 					<button role="tab" aria-selected="false" data-f="tools">
 						Security tooling
 					</button>
+					<button role="tab" aria-selected="false" data-f="cert">Certifications</button>
+				</div>
+				<div
+					class="path"
+					data-panel="cert"
+					hidden
+					role="img"
+					aria-label="Microsoft certification path. SC-900 Security, Compliance and Identity Fundamentals, studying now, as the suggested start. Then earn at least one associate certification: SC-200 Security Operations Analyst Associate, the chosen target, or SC-300 Identity and Access Administrator Associate, or SC-500 Cloud and AI Security Engineer Associate. One of those plus the SC-100 exam gives the Cybersecurity Architect Expert credential."
+				>
+					<div class="p-head">
+						<span>Microsoft path</span>
+						<span class="p-key">
+							<span><span class="k on"></span>studying</span>
+							<span><span class="k"></span>target</span>
+						</span>
+					</div>
+					<div class="graph">
+						<div class="node now">
+							<span class="code">SC-900</span>
+							<span class="nb">Security, Compliance and Identity Fundamentals</span>
+							<span class="st">studying now</span>
+						</div>
+						<div class="edge"><span>start</span></div>
+						<div class="set">
+							<span class="set-label">earn at least one</span>
+							<div class="route on">
+								<span class="code">SC-200</span>
+								<span class="nb">Security Operations Analyst Associate</span>
+								<span class="st">target</span>
+							</div>
+							<div class="route">
+								<span class="code">SC-300</span>
+								<span class="nb">Identity and Access Administrator Associate</span>
+							</div>
+							<div class="route">
+								<span class="code">SC-500</span>
+								<span class="nb">Cloud and AI Security Engineer Associate</span>
+							</div>
+						</div>
+						<div class="edge"><span>then</span></div>
+						<div class="node">
+							<span class="code">SC-100</span>
+							<span class="nb">Cybersecurity Architect Expert</span>
+						</div>
+					</div>
 				</div>
 				<div class="thead"><span>#</span><span>Name</span><span>Detail</span></div>
 				<div>
@@ -955,6 +1182,53 @@
 						</div>
 						<span class="when">Tool</span>
 					</div>
+					<div class="row" data-g="cert">
+						<span class="n">0</span>
+						<div>
+							<h3>
+								Security, Compliance and Identity Fundamentals<span>SC-900</span>
+							</h3>
+							<p>
+								Microsoft Learn course SC-900T00-A. Security, compliance and
+								identity fundamentals across Azure and Microsoft 365.
+							</p>
+						</div>
+						<span class="when">Studying</span>
+					</div>
+					<div class="row" data-g="cert">
+						<span class="n">0</span>
+						<div>
+							<h3>Security Operations Analyst Associate<span>SC-200</span></h3>
+							<p>
+								Defender XDR and Microsoft Sentinel: triage, incident response and
+								threat hunting in KQL.
+							</p>
+						</div>
+						<span class="when">Target</span>
+					</div>
+					<div class="row" data-g="cert">
+						<span class="n">0</span>
+						<div>
+							<h3>Cybersecurity Architect Expert<span>SC-100</span></h3>
+							<p>
+								Zero Trust architecture across identity, data, applications, network
+								and security operations. Earned with an associate cert, not on its
+								own.
+							</p>
+						</div>
+						<span class="when">Target</span>
+					</div>
+					<div class="row" data-g="cert">
+						<span class="n">0</span>
+						<div>
+							<h3>ISO/IEC 27001 Lead Auditor<span>cert</span></h3>
+							<p>
+								Auditing an ISMS against ISO/IEC 27001: risk treatment, control
+								selection and audit evidence.
+							</p>
+						</div>
+						<span class="when">Preparing</span>
+					</div>
 				</div>
 				<div class="end"></div>
 				<a class="more" href="https://github.com/CrashizVok" target="_blank" rel="noopener"
@@ -1029,7 +1303,8 @@
 				document.documentElement.classList.add("js");
 				document.querySelectorAll("section").forEach(function (sec) {
 					var tabs = sec.querySelectorAll(".tabs button"),
-						rows = sec.querySelectorAll(".row");
+						rows = sec.querySelectorAll(".row"),
+						panels = sec.querySelectorAll("[data-panel]");
 					function apply(f) {
 						var n = 0;
 						rows.forEach(function (r) {
@@ -1038,6 +1313,9 @@
 							if (show) {
 								r.querySelector(".n").textContent = ++n;
 							}
+						});
+						panels.forEach(function (p) {
+							p.hidden = !(f === "all" || p.dataset.panel === f);
 						});
 					}
 					tabs.forEach(function (b) {
