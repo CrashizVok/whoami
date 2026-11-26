@@ -56,6 +56,11 @@
 			.grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; margin-top: 24px; }
 			.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
 			.panel h2 { margin: 0 0 16px; font: 500 12px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+			.mode { display: flex; gap: 20px; margin: 0 0 20px; font: 400 14px var(--mono); }
+			.mode-btn { all: unset; cursor: pointer; color: var(--dim); padding-bottom: 6px; border-bottom: 1px solid transparent; }
+			.mode-btn.active { color: var(--text); border-color: var(--text); }
+			.mode-btn:hover { color: var(--text); }
+			[hidden] { display: none !important; }
 			.field { margin-bottom: 16px; }
 			.field:last-child { margin-bottom: 0; }
 			.field label { display: block; font: 400 12px/1.4 var(--mono); color: var(--muted); margin-bottom: 8px; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -118,6 +123,11 @@
 					<div class="panel">
 						<h2>Request</h2>
 
+						<div class="mode" role="tablist" aria-label="Mode">
+							<button type="button" class="mode-btn active" data-mode="encode" role="tab" aria-selected="true">Encode</button>
+							<button type="button" class="mode-btn" data-mode="decode" role="tab" aria-selected="false">Decode</button>
+						</div>
+
 						<div class="field">
 							<label for="endpoint">Endpoint</label>
 							<input id="endpoint" type="url" value="https://qaccp.zerohook.org" placeholder="https://qaccp.zerohook.org" spellcheck="false" />
@@ -128,12 +138,12 @@
 							<input id="key" type="password" placeholder="Key" autocomplete="off" spellcheck="false" />
 						</div>
 
-						<div class="field">
+						<div class="field" id="messageField">
 							<label for="message">Message</label>
 							<textarea id="message" placeholder="Text to encode"></textarea>
 						</div>
 
-						<div class="field">
+						<div class="field" id="payloadField" hidden>
 							<label for="payload">Payload</label>
 							<textarea id="payload" placeholder="Payload to decode"></textarea>
 						</div>
@@ -165,7 +175,7 @@
 
 						<div class="actions">
 							<button class="primary" id="encodeBtn" type="button">Encode</button>
-							<button id="decodeBtn" type="button">Decode</button>
+							<button class="primary" id="decodeBtn" type="button" hidden>Decode</button>
 							<button id="clearBtn" type="button">Clear</button>
 						</div>
 
@@ -221,6 +231,27 @@
 				var meta = document.getElementById("meta");
 				var encodeBtn = document.getElementById("encodeBtn");
 				var decodeBtn = document.getElementById("decodeBtn");
+				var messageField = document.getElementById("messageField");
+				var payloadField = document.getElementById("payloadField");
+				var modeBtns = document.querySelectorAll(".mode-btn");
+				var currentMode = "encode";
+
+				function setMode(mode) {
+					currentMode = mode;
+					modeBtns.forEach(function (btn) {
+						var active = btn.getAttribute("data-mode") === mode;
+						btn.classList.toggle("active", active);
+						btn.setAttribute("aria-selected", active ? "true" : "false");
+					});
+					messageField.hidden = mode !== "encode";
+					payloadField.hidden = mode !== "decode";
+					encodeBtn.hidden = mode !== "encode";
+					decodeBtn.hidden = mode !== "decode";
+					setStatus("", "");
+				}
+				modeBtns.forEach(function (btn) {
+					btn.addEventListener("click", function () { setMode(btn.getAttribute("data-mode")); });
+				});
 
 				function setStatus(text, kind) {
 					status.textContent = text || "";
@@ -318,6 +349,7 @@
 				document.getElementById("usePayloadBtn").addEventListener("click", function () {
 					if (!result.value) return;
 					payload.value = result.value;
+					setMode("decode");
 					setStatus("Payload updated.", "ok");
 				});
 			})();
