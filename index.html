@@ -725,6 +725,33 @@
 					display: none;
 				}
 			}
+			.popup {
+				position: fixed;
+				top: calc(72px + env(safe-area-inset-top, 0px));
+				right: 20px;
+				width: min(320px, calc(100vw - 40px));
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				padding: 16px;
+				z-index: 20;
+				box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+			}
+			.popup[hidden] { display: none; }
+			.popup p { margin: 0; font: 400 13px/1.6 var(--mono); color: var(--muted); }
+			.popup p strong { color: var(--text); font-weight: 500; }
+			.popup a { color: var(--accent); }
+			.popup a:hover { text-decoration: underline; }
+			.popup .close {
+				all: unset;
+				position: absolute;
+				top: 10px;
+				right: 12px;
+				cursor: pointer;
+				color: var(--dim);
+				font: 400 16px/1 var(--mono);
+			}
+			.popup .close:hover { color: var(--text); }
 		</style>
 	</head>
 	<body>
@@ -1294,6 +1321,11 @@
 			</section>
 		</main>
 
+		<div class="popup" id="projectPopup" hidden>
+			<button class="close" id="projectPopupClose" type="button" aria-label="Close">×</button>
+			<p><strong>QACCP is live.</strong><br />You can try the project now.<br />Provider: <a href="https://qaccp.zerohook.org/" target="_blank" rel="noopener">qaccp.zerohook.org</a></p>
+		</div>
+
 		<footer>
 			<div class="wrap"><span>© 2026 CrashiZ</span><span>github.com/CrashizVok</span></div>
 		</footer>
@@ -1301,6 +1333,17 @@
 		<script>
 			(function () {
 				document.documentElement.classList.add("js");
+				var popup = document.getElementById("projectPopup");
+				var popupClose = document.getElementById("projectPopupClose");
+				if (popup) {
+					var today = new Date();
+					var y = today.getFullYear();
+					var m = String(today.getMonth() + 1).padStart(2, "0");
+					var d = String(today.getDate()).padStart(2, "0");
+					var key = y + "-" + m + "-" + d;
+					if (key === "2026-11-26") popup.hidden = false;
+					if (popupClose) popupClose.addEventListener("click", function () { popup.hidden = true; });
+				}
 				document.querySelectorAll("section").forEach(function (sec) {
 					var tabs = sec.querySelectorAll(".tabs button"),
 						rows = sec.querySelectorAll(".row"),
