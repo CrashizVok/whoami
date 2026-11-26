@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<title>QACCP · Lab · CrashiZ</title>
+		<meta name="description" content="QACCP experimental interface." />
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%20color='%23ededed'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23000000'/%3E%3Cg%20transform='translate%284%2C3%29'%3E%3Cpath%20fill='currentColor'%20d='M%203%2C11%20Q%2012%2C3%2021%2C11%20L%2021%2C13%20Q%2012%2C5%203%2C13%20z'/%3E%3Cpath%20fill='currentColor'%20d='M%203%2C13%20Q%2012%2C21%2021%2C13%20L%2021%2C15%20Q%2012%2C23%203%2C15%20z'/%3E%3Cpath%20fill='currentColor'%20d='M%202.5%2C10.5%20L%201%2C9%20L%202%2C11.2%20z%20M%2021.5%2C10.5%20L%2023%2C9%20L%2022%2C11.2%20z%20M%202.5%2C15.5%20L%201%2C17%20L%202%2C14.8%20z%20M%2021.5%2C15.5%20L%2023%2C17%20L%2022%2C14.8%20z'/%3E%3Cg%20transform='translate%2812%2C12%29%20scale%280.58%29%20translate%28-12%2C-12%29'%3E%3Cpath%20fill='currentColor'%20fill-rule='evenodd'%20d='M%202.5%2C12%20C%202.5%2C7.5%207%2C5%2012%2C5%20C%2017%2C5%2021.5%2C7.5%2021.5%2C12%20C%2021.5%2C16.5%2017%2C19%2012%2C19%20C%207%2C19%202.5%2C16.5%202.5%2C12%20z%20M%2010.9%2C9.7%20A%201.1%2C1.1%200%200%201%2013.1%2C9.7%20v%204.6%20A%201.1%2C1.1%200%200%201%2010.9%2C14.3%20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Press+Start+2P&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--bg: #000000;
+				--surface: #151515;
+				--border: #1f1f1f;
+				--dim: #656665;
+				--muted: #a0a0a0;
+				--text: #ededed;
+				--accent: #ffd426;
+				--danger: #ff6b6b;
+				--ok: #7ee787;
+				--sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+				--mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+				--pixel: "Press Start 2P", ui-monospace, monospace;
+				--w: 1088px;
+				--radius: 6px;
+				color-scheme: dark;
+				box-sizing: border-box;
+			}
+			*, *::before, *::after { box-sizing: border-box; }
+			html { scroll-behavior: smooth; }
+			body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+			a { color: inherit; text-decoration: none; }
+			a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+			.wrap { max-width: var(--w); margin: 0 auto; padding: 0 20px; }
+			.label { font: 500 12px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); margin: 0; }
+			nav { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--border); }
+			nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; max-width: 1280px; }
+			.brand { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+			.brand i { font-style: normal; color: var(--dim); font-weight: 400; }
+			.brand svg { width: 22px; height: 22px; fill: var(--text); }
+			.links { display: flex; gap: 20px; font-size: 14px; color: var(--muted); }
+			.links a:hover { color: var(--text); }
+			.hero { padding: 72px 0 40px; border-bottom: 1px solid var(--border); }
+			.pixel { font: 400 clamp(28px, 5vw, 48px)/1.25 var(--pixel); color: var(--text); margin: 0; text-shadow: 3px 3px 0 #000, 4px 4px 0 #454545, 7px 7px 0 #000, 8px 8px 0 #1f1f1f; }
+			.lead { margin: 20px 0 0; max-width: 62ch; color: var(--muted); font-size: 18px; line-height: 1.7; }
+			.lead b { color: var(--text); font-weight: 400; }
+			section { padding: 40px 0 72px; }
+			.grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; margin-top: 24px; }
+			.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+			.panel h2 { margin: 0 0 16px; font: 500 12px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+			.field { margin-bottom: 16px; }
+			.field:last-child { margin-bottom: 0; }
+			.field label { display: block; font: 400 12px/1.4 var(--mono); color: var(--muted); margin-bottom: 8px; letter-spacing: 0.04em; text-transform: uppercase; }
+			input[type="text"], input[type="password"], input[type="number"], input[type="url"], textarea, select {
+				width: 100%; background: #0a0a0a; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius);
+				padding: 12px 14px; font: 400 14px/1.5 var(--mono); transition: border-color 0.2s;
+			}
+			textarea { min-height: 140px; resize: vertical; }
+			input:hover, textarea:hover, select:hover { border-color: var(--dim); }
+			input:focus, textarea:focus, select:focus { border-color: var(--muted); outline: none; }
+			.row2 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+			.actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+			button {
+				appearance: none; border: 1px solid var(--border); background: transparent; color: var(--text);
+				font: 500 14px/1 var(--mono); padding: 12px 16px; border-radius: var(--radius); cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s;
+			}
+			button:hover { border-color: var(--accent); color: var(--accent); }
+			button.primary { background: var(--text); color: #000; border-color: var(--text); }
+			button.primary:hover { background: var(--accent); border-color: var(--accent); color: #000; }
+			button:disabled { opacity: 0.5; cursor: not-allowed; }
+			.status { margin-top: 16px; font: 400 13px/1.6 var(--mono); color: var(--muted); min-height: 21px; white-space: pre-wrap; word-break: break-word; }
+			.status.err { color: var(--danger); }
+			.status.ok { color: var(--ok); }
+			.result { width: 100%; min-height: 180px; background: #0a0a0a; color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; font: 400 13px/1.6 var(--mono); resize: vertical; }
+			.meta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 14px; font: 400 12px/1.4 var(--mono); color: var(--dim); }
+			.meta span { color: var(--muted); }
+			.note { margin-top: 24px; padding: 16px 0 0; border-top: 1px solid var(--border); color: var(--dim); font: 400 12px/1.7 var(--mono); }
+			footer { border-top: 1px solid var(--border); padding: 28px 0 44px; color: var(--dim); font-size: 13px; }
+			footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+			@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+			@media (max-width: 640px) { .row2 { grid-template-columns: 1fr; } .hero { padding: 48px 0 32px; } .links { gap: 14px; } .brand .full { display: none; } }
+		</style>
+	</head>
+	<body>
+		<nav>
+			<div class="wrap">
+				<a class="brand" href="index.html" aria-label="CrashiZ home">
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M 3,11 Q 12,3 21,11 L 21,13 Q 12,5 3,13 z" />
+						<path d="M 3,13 Q 12,21 21,13 L 21,15 Q 12,23 3,15 z" />
+						<path d="M 2.5,10.5 L 1,9 L 2,11.2 z M 21.5,10.5 L 23,9 L 22,11.2 z M 2.5,15.5 L 1,17 L 2,14.8 z M 21.5,15.5 L 23,17 L 22,14.8 z" />
+						<g transform="translate(12,12) scale(0.58) translate(-12,-12)">
+							<path fill-rule="evenodd" d="M 2.5,12 C 2.5,7.5 7,5 12,5 C 17,5 21.5,7.5 21.5,12 C 21.5,16.5 17,19 12,19 C 7,19 2.5,16.5 2.5,12 z M 10.9,9.7 A 1.1,1.1 0 0 1 13.1,9.7 v 4.6 A 1.1,1.1 0 0 1 10.9,14.3 z" />
+						</g>
+					</svg>
+					<i>/</i><span class="full">CrashiZ</span>
+				</a>
+				<div class="links">
+					<a href="index.html#work">Work</a>
+					<a href="index.html#contact">Contact</a>
+				</div>
+			</div>
+		</nav>
+
+		<main class="wrap">
+			<div class="hero">
+				<p class="label">Experimental interface</p>
+				<h1 class="pixel" style="margin-top:18px;">QACCP</h1>
+				<p class="lead">
+					<b>Lab interface</b> for testing requests against a configured QACCP endpoint.
+					Provide an endpoint, key, and input, then run an encode or decode request.
+				</p>
+			</div>
+
+			<section>
+				<p class="label">Lab</p>
+				<div class="grid">
+					<div class="panel">
+						<h2>Request</h2>
+
+						<div class="field">
+							<label for="endpoint">Endpoint</label>
+							<input id="endpoint" type="url" placeholder="https://your-worker.example.workers.dev" spellcheck="false" />
+						</div>
+
+						<div class="field">
+							<label for="key">Key</label>
+							<input id="key" type="password" placeholder="Key" autocomplete="off" spellcheck="false" />
+						</div>
+
+						<div class="field">
+							<label for="message">Message</label>
+							<textarea id="message" placeholder="Text to encode"></textarea>
+						</div>
+
+						<div class="field">
+							<label for="payload">Payload</label>
+							<textarea id="payload" placeholder="Payload to decode"></textarea>
+						</div>
+
+						<div class="row2">
+							<div class="field">
+								<label for="dust">Dust ratio</label>
+								<input id="dust" type="number" min="2" max="16" value="4" />
+							</div>
+							<div class="field">
+								<label for="session">Session</label>
+								<input id="session" type="number" min="0" value="0" />
+							</div>
+							<div class="field">
+								<label for="format">Format</label>
+								<select id="format">
+									<option value="base64" selected>base64</option>
+									<option value="hex">hex</option>
+								</select>
+							</div>
+						</div>
+						<div class="field" style="margin-top:16px;">
+							<label for="includeMeta">Response meta</label>
+							<select id="includeMeta">
+								<option value="true" selected>include</option>
+								<option value="false">omit</option>
+							</select>
+						</div>
+
+						<div class="actions">
+							<button class="primary" id="encodeBtn" type="button">Encode</button>
+							<button id="decodeBtn" type="button">Decode</button>
+							<button id="clearBtn" type="button">Clear</button>
+						</div>
+
+						<div id="status" class="status" aria-live="polite"></div>
+					</div>
+
+					<div class="panel">
+						<h2>Result</h2>
+						<textarea id="result" class="result" readonly placeholder="Response will appear here"></textarea>
+						<div class="actions">
+							<button id="copyBtn" type="button">Copy result</button>
+							<button id="usePayloadBtn" type="button">Use as payload</button>
+						</div>
+						<div class="meta" id="meta"></div>
+						<div class="note">
+							The endpoint is configured by the user. Requests are sent directly from the browser to the configured endpoint.
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer>
+			<div class="wrap"><span>© 2026 CrashiZ</span><span>github.com/CrashizVok</span></div>
+		</footer>
+
+		<script>
+			(function () {
+				var endpoint = document.getElementById("endpoint");
+				var key = document.getElementById("key");
+				var message = document.getElementById("message");
+				var payload = document.getElementById("payload");
+				var dust = document.getElementById("dust");
+				var session = document.getElementById("session");
+				var format = document.getElementById("format");
+				var includeMeta = document.getElementById("includeMeta");
+				var status = document.getElementById("status");
+				var result = document.getElementById("result");
+				var meta = document.getElementById("meta");
+				var encodeBtn = document.getElementById("encodeBtn");
+				var decodeBtn = document.getElementById("decodeBtn");
+
+				function setStatus(text, kind) {
+					status.textContent = text || "";
+					status.className = "status" + (kind ? " " + kind : "");
+				}
+
+				function setMeta(obj) {
+					meta.innerHTML = "";
+					if (!obj || typeof obj !== "object") return;
+					Object.keys(obj).forEach(function (k) {
+						var item = document.createElement("div");
+						var label = document.createElement("span");
+						label.textContent = k + ": ";
+						item.appendChild(label);
+						item.appendChild(document.createTextNode(String(obj[k])));
+						meta.appendChild(item);
+					});
+				}
+
+				function endpointValue() {
+					var v = (endpoint.value || "").trim().replace(/\/+$/, "");
+					if (!v) throw new Error("Endpoint is required.");
+					return v;
+				}
+
+				async function send(action) {
+					setStatus("Sending request...", "");
+					setMeta(null);
+					result.value = "";
+					encodeBtn.disabled = true;
+					decodeBtn.disabled = true;
+					try {
+						var url = endpointValue();
+						var body = {
+							action: action,
+							key: key.value || "",
+							dust_ratio: Number(dust.value || 4),
+							session: Number(session.value || 0),
+							format: format.value || "base64",
+							include_meta: includeMeta.value === "true"
+						};
+						if (action === "encode") body.message = message.value || "";
+						if (action === "decode") body.payload = payload.value || "";
+
+						var res = await fetch(url, {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify(body)
+						});
+						var data;
+						try { data = await res.json(); } catch (e) { data = { ok: false, error: "Invalid response." }; }
+
+						if (!res.ok || !data.ok) {
+							setStatus(data && data.error ? data.error : "Request failed.", "err");
+							result.value = JSON.stringify(data, null, 2);
+							return;
+						}
+
+						if (action === "encode") {
+							result.value = data.payload || "";
+							setStatus("Encode complete.", "ok");
+						} else {
+							result.value = data.message || "";
+							setStatus("Decode complete.", "ok");
+						}
+						setMeta(data.meta || null);
+					} catch (err) {
+						setStatus(err && err.message ? err.message : "Request failed.", "err");
+					} finally {
+						encodeBtn.disabled = false;
+						decodeBtn.disabled = false;
+					}
+				}
+
+				encodeBtn.addEventListener("click", function () { send("encode"); });
+				decodeBtn.addEventListener("click", function () { send("decode"); });
+				document.getElementById("clearBtn").addEventListener("click", function () {
+					message.value = "";
+					payload.value = "";
+					result.value = "";
+					setMeta(null);
+					setStatus("Cleared.", "");
+				});
+				document.getElementById("copyBtn").addEventListener("click", async function () {
+					if (!result.value) return;
+					try {
+						await navigator.clipboard.writeText(result.value);
+						setStatus("Copied.", "ok");
+					} catch (e) {
+						result.select();
+						document.execCommand("copy");
+						setStatus("Copied.", "ok");
+					}
+				});
+				document.getElementById("usePayloadBtn").addEventListener("click", function () {
+					if (!result.value) return;
+					payload.value = result.value;
+					setStatus("Payload updated.", "ok");
+				});
+			})();
+		</script>
+	</body>
+</html>
