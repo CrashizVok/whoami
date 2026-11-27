@@ -1341,14 +1341,29 @@
 				document.documentElement.classList.add("js");
 				var popup = document.getElementById("projectPopup");
 				var popupClose = document.getElementById("projectPopupClose");
+				var popupBar = document.getElementById("projectPopupBar");
 				if (popup) {
-					var today = new Date();
-					var y = today.getFullYear();
-					var m = String(today.getMonth() + 1).padStart(2, "0");
-					var d = String(today.getDate()).padStart(2, "0");
+					var now = new Date();
+					var y = now.getFullYear();
+					var m = String(now.getMonth() + 1).padStart(2, "0");
+					var d = String(now.getDate()).padStart(2, "0");
 					var key = y + "-" + m + "-" + d;
-					if (key === "2026-11-26") popup.hidden = false;
-					if (popupClose) popupClose.addEventListener("click", function () { popup.hidden = true; });
+					var showOn = "2026-11-27";
+					if (key === showOn) {
+						popup.hidden = false;
+						var end = new Date(y, now.getMonth(), now.getDate() + 1, 0, 0, 0, 0).getTime();
+						var start = new Date(y, now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime();
+						function tick() {
+							var t = Date.now();
+							var left = Math.max(0, end - t);
+							var total = Math.max(1, end - start);
+							if (popupBar) popupBar.style.width = (100 * left / total) + "%";
+							if (left <= 0) { popup.hidden = true; return; }
+							setTimeout(tick, 1000);
+						}
+						tick();
+					}
+					if (popupClose) popupClose.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); popup.hidden = true; });
 				}
 				document.querySelectorAll("section").forEach(function (sec) {
 					var tabs = sec.querySelectorAll(".tabs button"),
