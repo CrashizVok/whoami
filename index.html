@@ -1343,14 +1343,18 @@
 				var popupClose = document.getElementById("projectPopupClose");
 				var popupBar = document.getElementById("projectPopupBar");
 				if (popup) {
+					var storageKey = "qaccp-popup-seen";
+					var seen = false;
+					try { seen = localStorage.getItem(storageKey) === "1"; } catch (e) {}
 					var now = new Date();
 					var y = now.getFullYear();
 					var m = String(now.getMonth() + 1).padStart(2, "0");
 					var d = String(now.getDate()).padStart(2, "0");
 					var key = y + "-" + m + "-" + d;
 					var showOn = "2026-11-27";
-					if (key === showOn) {
+					if (key === showOn && !seen) {
 						popup.hidden = false;
+						try { localStorage.setItem(storageKey, "1"); } catch (e) {}
 						var end = new Date(y, now.getMonth(), now.getDate() + 1, 0, 0, 0, 0).getTime();
 						var start = new Date(y, now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime();
 						function tick() {
@@ -1363,7 +1367,12 @@
 						}
 						tick();
 					}
-					if (popupClose) popupClose.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); popup.hidden = true; });
+					if (popupClose) popupClose.addEventListener("click", function (e) {
+						e.preventDefault();
+						e.stopPropagation();
+						popup.hidden = true;
+						try { localStorage.setItem(storageKey, "1"); } catch (err) {}
+					});
 				}
 				document.querySelectorAll("section").forEach(function (sec) {
 					var tabs = sec.querySelectorAll(".tabs button"),
