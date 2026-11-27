@@ -753,8 +753,8 @@
 				z-index: 2;
 			}
 			.popup .close:hover { color: var(--text); }
-			.popup-timer { margin-top: 14px; height: 2px; background: var(--border); border-radius: 999px; overflow: hidden; }
-			.popup-timer-bar { height: 100%; width: 100%; background: var(--accent); transform-origin: left; transition: width 1s linear; }
+			.popup-ring { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+			.popup-ring rect { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
 		</style>
 	</head>
 	<body>
@@ -1325,11 +1325,11 @@
 		</main>
 
 		<div class="popup" id="projectPopup" hidden>
+			<svg class="popup-ring" aria-hidden="true"><rect id="projectPopupRing" x="1" y="1" rx="12" ry="12"></rect></svg>
 			<button class="close" id="projectPopupClose" type="button" aria-label="Close">×</button>
 			<a class="popup-link" href="qaccp.html">
 				<p><strong>QACCP is live.</strong><br />You can try the project now.<br />Provider: qaccp.zerohook.org</p>
 			</a>
-			<div class="popup-timer" aria-hidden="true"><div class="popup-timer-bar" id="projectPopupBar"></div></div>
 		</div>
 
 		<footer>
@@ -1341,37 +1341,55 @@
 				document.documentElement.classList.add("js");
 				var popup = document.getElementById("projectPopup");
 				var popupClose = document.getElementById("projectPopupClose");
-				var popupBar = document.getElementById("projectPopupBar");
+				var popupRing = document.getElementById("projectPopupRing");
 				if (popup) {
 					var storageKey = "qaccp-popup-seen";
 					var seen = false;
 					try { seen = localStorage.getItem(storageKey) === "1"; } catch (e) {}
-					var now = new Date();
-					var y = now.getFullYear();
-					var m = String(now.getMonth() + 1).padStart(2, "0");
-					var d = String(now.getDate()).padStart(2, "0");
-					var key = y + "-" + m + "-" + d;
-					var showOn = "2026-11-27";
-					if (key === showOn && !seen) {
+					function hidePopup() {
+						popup.hidden = true;
+						try { localStorage.setItem(storageKey, "1"); } catch (err) {}
+					}
+					if (!seen) {
 						popup.hidden = false;
 						try { localStorage.setItem(storageKey, "1"); } catch (e) {}
-						var end = new Date(y, now.getMonth(), now.getDate() + 1, 0, 0, 0, 0).getTime();
-						var start = new Date(y, now.getMonth(), now.getDate(), 0, 0, 0, 0).getTime();
-						function tick() {
-							var t = Date.now();
-							var left = Math.max(0, end - t);
-							var total = Math.max(1, end - start);
-							if (popupBar) popupBar.style.width = (100 * left / total) + "%";
-							if (left <= 0) { popup.hidden = true; return; }
-							setTimeout(tick, 1000);
+						var duration = 5000;
+						var start = null;
+						function sizeRing() {
+							var w = popup.offsetWidth;
+							var h = popup.offsetHeight;
+							var sw = 2;
+							var rw = Math.max(0, w - sw);
+							var rh = Math.max(0, h - sw);
+							popupRing.setAttribute("width", rw);
+							popupRing.setAttribute("height", rh);
+							var perim = 2 * (rw + rh) - 8 * 12 + 2 * Math.PI * 12;
+							if (perim < 0) perim = 2 * (rw + rh);
+							popupRing.style.strokeDasharray = perim;
+							return perim;
 						}
-						tick();
+						var perim = sizeRing();
+						popupRing.style.strokeDashoffset = perim;
+						function frame(ts) {
+							if (popup.hidden) return;
+							if (!start) start = ts;
+							var p = Math.min(1, (ts - start) / duration);
+							popupRing.style.strokeDashoffset = perim * (1 - p);
+							if (p >= 1) { hidePopup(); return; }
+							requestAnimationFrame(frame);
+						}
+						requestAnimationFrame(frame);
+						window.addEventListener("resize", function () {
+							if (popup.hidden) return;
+							var p2 = perim > 0 ? 1 - (parseFloat(popupRing.style.strokeDashoffset) / perim) : 0;
+							perim = sizeRing();
+							popupRing.style.strokeDashoffset = perim * (1 - p2);
+						});
 					}
 					if (popupClose) popupClose.addEventListener("click", function (e) {
 						e.preventDefault();
 						e.stopPropagation();
-						popup.hidden = true;
-						try { localStorage.setItem(storageKey, "1"); } catch (err) {}
+						hidePopup();
 					});
 				}
 				document.querySelectorAll("section").forEach(function (sec) {
