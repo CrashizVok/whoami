@@ -740,8 +740,8 @@
 			.popup[hidden] { display: none; }
 			.popup p { margin: 0; font: 400 13px/1.6 var(--mono); color: var(--muted); }
 			.popup p strong { color: var(--text); font-weight: 500; }
-			.popup a { color: var(--accent); }
-			.popup a:hover { text-decoration: underline; }
+			.popup-link { display: block; color: inherit; text-decoration: none; }
+			.popup-link:hover p strong { color: var(--accent); }
 			.popup .close {
 				all: unset;
 				position: absolute;
@@ -750,8 +750,11 @@
 				cursor: pointer;
 				color: var(--dim);
 				font: 400 16px/1 var(--mono);
+				z-index: 2;
 			}
 			.popup .close:hover { color: var(--text); }
+			.popup-timer { margin-top: 14px; height: 2px; background: var(--border); border-radius: 999px; overflow: hidden; }
+			.popup-timer-bar { height: 100%; width: 100%; background: var(--accent); transform-origin: left; transition: width 1s linear; }
 		</style>
 	</head>
 	<body>
@@ -1323,7 +1326,10 @@
 
 		<div class="popup" id="projectPopup" hidden>
 			<button class="close" id="projectPopupClose" type="button" aria-label="Close">×</button>
-			<p><strong>QACCP is live.</strong><br />You can try the project now.<br />Provider: <a href="https://qaccp.zerohook.org/" target="_blank" rel="noopener">qaccp.zerohook.org</a></p>
+			<a class="popup-link" href="qaccp.html">
+				<p><strong>QACCP is live.</strong><br />You can try the project now.<br />Provider: qaccp.zerohook.org</p>
+			</a>
+			<div class="popup-timer" aria-hidden="true"><div class="popup-timer-bar" id="projectPopupBar"></div></div>
 		</div>
 
 		<footer>
